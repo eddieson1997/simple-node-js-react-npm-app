@@ -9,6 +9,11 @@ pipeline {
         CI = 'true'
     }
     stages {
+          stage('Checkout SCM') {
+           steps {
+            git 'https://github.com/eddieson1997/simple-node-js-react-npm-app.git'
+           }
+          }
         stage('Build') {
             steps {
                 sh 'npm install'
