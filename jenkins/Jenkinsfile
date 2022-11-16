@@ -9,11 +9,11 @@ pipeline {
         CI = 'true'
     }
     stages {
-          stage('Checkout SCM') {
-           steps {
-            git 'https://github.com/eddieson1997/simple-node-js-react-npm-app.git'
-           }
-          }
+		stage('Checkout SCM') {
+			steps {
+				git 'https://github.com/eddieson1997/simple-node-js-react-npm-app.git'
+			}
+		}
         stage('Build') {
             steps {
                 sh 'npm install'
@@ -26,7 +26,7 @@ pipeline {
         }
         stage('OWASP DependencyCheck') {
            steps {
-            dependencyCheck additionalArguments: '--format HTML --format XML', odcInstallation: 'OWASP Dependency Check'
+            dependencyCheck additionalArguments: '--format HTML --format XML', odcInstallation: 'Default'
            }
           }        
         stage('Deliver') {
@@ -36,10 +36,10 @@ pipeline {
                 sh './jenkins/scripts/kill.sh'
             }
         }
-         }
-            post {
-          success {
-           dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-          }
     }
+	post {
+		success {
+			dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+		}
+	}
 }
